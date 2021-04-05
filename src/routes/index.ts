@@ -1,11 +1,15 @@
 import { Router } from "express";
 
+import { authenticateUsersRoutes } from "./authenticate.routes";
 import { categoriesRoutes } from "./categories.routes";
 import { specificationsRoutes } from "./specification.routes";
+import { usersRoutes } from "./users.routes";
 
 const router = Router();
 
 router.use("/categories", categoriesRoutes);
 router.use("/specifications", specificationsRoutes);
+router.use("/users", usersRoutes);
+router.use(authenticateUsersRoutes);
 
 export { router };

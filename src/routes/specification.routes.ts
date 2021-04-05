@@ -1,16 +1,13 @@
 import { Router } from "express";
 
-import { createCategoryController } from "../modules/cars/useCases/createSpecification";
+import { ensureAuthenticated } from "../middlewares/ensureAuthenticated";
+import { CreateSpecificationController } from "../modules/cars/useCases/createSpecification/CreateSpecificationController";
 
 const specificationsRoutes = Router();
 
-specificationsRoutes.post("/", (request, response) => {
-  return createCategoryController.handle(request, response);
-});
+const createSpecificationController = new CreateSpecificationController();
 
-// specificationsRoutes.get("/", (request, response) => {
-//   const all = specificationsRepository.list();
-//   return response.status(201).send(all);
-// });
+specificationsRoutes.use(ensureAuthenticated);
+specificationsRoutes.post("/", createSpecificationController.handle);
 
 export { specificationsRoutes };
