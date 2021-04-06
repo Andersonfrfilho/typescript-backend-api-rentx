@@ -26,12 +26,17 @@ export async function ensureAuthenticated(
       "89ba023086e37a345839e0c6a0d272eb"
     ) as IPayload;
     const usersRepository = new UsersRepository();
-    const user = usersRepository.findById(user_id);
+    const user = await usersRepository.findById(user_id);
     if (!user) {
-      throw new AppError("usuário não é valido");
+      throw new AppError("usuário não é valido", 401);
     }
+
+    request.user = {
+      id: user_id,
+    };
+
     next();
   } catch {
-    throw new AppError("Invalid token");
+    throw new AppError("Invalid token", 401);
   }
 }
