@@ -6,6 +6,6 @@ const authenticateUsersRoutes = Router();
 
 const createSpecificationController = new AuthenticatedUserController();
 
-authenticateUsersRoutes.post("/session", createSpecificationController.handle);
+authenticateUsersRoutes.post("/sessions", createSpecificationController.handle);
 
 export { authenticateUsersRoutes };
