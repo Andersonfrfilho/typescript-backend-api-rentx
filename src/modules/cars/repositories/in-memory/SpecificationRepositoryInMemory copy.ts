@@ -1,4 +1,4 @@
-import { ICreateSpecificationDTO } from "@modules/cars/dtos/ICreateSpecificationDTO";
+import { ICreateSpecificationsDTO } from "@modules/cars/dtos/ICreateSpecificationsDTO";
 import { Specification } from "@modules/cars/infra/typeorm/entities/Specification";
 import { ISpecificationsRepository } from "@modules/cars/repositories/ISpecificationsRepository";
 
@@ -7,7 +7,7 @@ class SpecificationsRepositoryInMemory implements ISpecificationsRepository {
   async create({
     name,
     description,
-  }: ICreateSpecificationDTO): Promise<Specification> {
+  }: ICreateSpecificationsDTO): Promise<Specification> {
     const specification = new Specification();
 
     Object.assign(specification, {
