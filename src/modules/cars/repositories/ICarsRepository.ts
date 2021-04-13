@@ -1,5 +1,6 @@
 import { ICreateCarDTO } from "@modules/cars/dtos/ICreateCarDTO";
 import { IFindAllAvailableCarsDTO } from "@modules/cars/dtos/IFindAllAvailableCarsDTO";
+import { IUpdateAvailableDTO } from "@modules/cars/dtos/IUpdateAvailableDTO";
 import { Car } from "@modules/cars/infra/typeorm/entities/Car";
 
 interface ICarsRepository {
@@ -11,6 +12,7 @@ interface ICarsRepository {
     name,
   }: IFindAllAvailableCarsDTO): Promise<Car[]>;
   findById(car_id: string): Promise<Car>;
+  updateAvailable({ id, available }: IUpdateAvailableDTO): Promise<void>;
 }
 
 export { ICarsRepository };

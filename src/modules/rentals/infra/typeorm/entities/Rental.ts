@@ -11,6 +11,7 @@ import {
 } from "typeorm";
 import { v4 as uuidV4 } from "uuid";
 
+import { Car } from "@modules/cars/infra/typeorm/entities/Car";
 import { Category } from "@modules/cars/infra/typeorm/entities/Category";
 import { Specification } from "@modules/cars/infra/typeorm/entities/Specification";
 
@@ -19,6 +20,10 @@ class Rental {
   @PrimaryColumn()
   id?: string;
 
+  @ManyToOne(() => Car)
+  @JoinColumn({ name: "car_id" })
+  car: Car;
+
   @Column()
   car_id: string;
 
@@ -26,16 +31,16 @@ class Rental {
   user_id: string;
 
   @Column()
-  start_date?: number;
+  start_date?: Date;
 
   @Column()
-  end_date?: string;
+  end_date?: Date;
 
   @Column()
   expected_return_date: Date;
 
   @Column()
-  total?: string;
+  total?: number;
 
   @CreateDateColumn()
   created_at?: Date;
