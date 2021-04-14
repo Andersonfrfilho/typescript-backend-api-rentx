@@ -5,6 +5,9 @@ import { IDateProvider } from "@shared/container/providers/DateProvider/IDatePro
 
 dayjs.extend(utc);
 class DayJsDateProvider implements IDateProvider {
+  addDays(days: number) {
+    return dayjs().add(days, "days").toDate();
+  }
   dateNow(): Date {
     return dayjs().toDate();
   }

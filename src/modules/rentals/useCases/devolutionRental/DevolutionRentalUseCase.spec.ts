@@ -35,27 +35,27 @@ describe("Create Rental", () => {
   });
 
   it("should not be able to create a new rental if there is another open to them same user", async () => {
-    expect(async () => {
-      await createRentalUseCase.execute({
-        user_id: "12345",
-        car_id: "12345",
-        expected_return_date: dayAdd24Hours,
-      });
-      await createRentalUseCase.execute({
+    await createRentalUseCase.execute({
+      user_id: "12345",
+      car_id: "12345",
+      expected_return_date: dayAdd24Hours,
+    });
+    await expect(
+      createRentalUseCase.execute({
         user_id: "1234",
         car_id: "123456",
         expected_return_date: dayAdd24Hours,
-      });
-    }).rejects.toBeInstanceOf(AppError);
+      })
+    ).rejects.toEqual(new AppError("Rental does not exists!"));
   });
 
   it("should not be able to create a new rental with invalid return time", async () => {
-    expect(async () => {
-      await createRentalUseCase.execute({
+    await expect(
+      createRentalUseCase.execute({
         user_id: "1234",
         car_id: "12345",
         expected_return_date: dayjs().toDate(),
-      });
-    }).rejects.toBeInstanceOf(AppError);
+      })
+    ).rejects.toEqual(new AppError("Rental does not exists!"));
   });
 });

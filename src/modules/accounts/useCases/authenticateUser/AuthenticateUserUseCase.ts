@@ -2,8 +2,11 @@ import { compare } from "bcrypt";
 import { sign } from "jsonwebtoken";
 import { inject, injectable } from "tsyringe";
 
-import { AppError } from "@shared/errors/AppError";
+import auth from "@config/auth";
 import { IUsersRepository } from "@modules/accounts/repositories/IUsersRepository";
+import { IUsersTokensRepository } from "@modules/accounts/repositories/IUsersTokensRepository";
+import { IDateProvider } from "@shared/container/providers/DateProvider/IDateProvider";
+import { AppError } from "@shared/errors/AppError";
 
 interface IResponse {
   user: {
@@ -11,6 +14,7 @@ interface IResponse {
     password: string;
   };
   token: string;
+  refresh_token: string;
 }
 interface IRequest {
   email: string;
@@ -20,10 +24,15 @@ interface IRequest {
 class AuthenticateUserUseCase {
   constructor(
     @inject("UsersRepository")
-    private usersRepository: IUsersRepository
+    private usersRepository: IUsersRepository,
+    @inject("UsersTokensRepository")
+    private usersTokensRepository: IUsersTokensRepository,
+    @inject("DayjsDateProvider")
+    private dateProvider: IDateProvider
   ) {}
   async execute({ email, password }: IRequest): Promise<IResponse> {
     const user = await this.usersRepository.findByEmail(email);
+    const { expires_in, secret } = auth;
     if (!user) {
       throw new AppError("User not exist");
     }
@@ -32,14 +41,28 @@ class AuthenticateUserUseCase {
       throw new AppError("User not exist");
     }
 
-    const token = sign({}, "89ba023086e37a345839e0c6a0d272eb", {
+    const token = sign({}, secret.token, {
       subject: user.id,
-      expiresIn: "1d",
+      expiresIn: expires_in.token,
+    });
+
+    const refresh_token = sign({ email }, secret.refresh, {
+      subject: user.id,
+      expiresIn: expires_in.refresh,
+    });
+    const refresh_token_expires_date = this.dateProvider.addDays(
+      expires_in.refresh_days
+    );
+    await this.usersTokensRepository.create({
+      user_id: user.id,
+      expires_date: refresh_token_expires_date,
+      refresh_token,
     });
 
     return {
       user,
       token,
+      refresh_token,
     };
   }
 }
