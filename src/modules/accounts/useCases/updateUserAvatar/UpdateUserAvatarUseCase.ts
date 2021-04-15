@@ -1,7 +1,8 @@
 import { inject, injectable } from "tsyringe";
 
-import { AppError } from "@shared/errors/AppError";
 import { IUsersRepository } from "@modules/accounts/repositories/IUsersRepository";
+import { IStorageProvider } from "@shared/container/providers/StorageProvider/IStorageProvider";
+import { AppError } from "@shared/errors/AppError";
 import { deleteFile } from "@utils/file";
 
 interface IRequest {
@@ -12,18 +13,21 @@ interface IRequest {
 class UpdateUserAvatarUseCase {
   constructor(
     @inject("UsersRepository")
-    private usersRepository: IUsersRepository
+    private usersRepository: IUsersRepository,
+    @inject("StorageProvider")
+    private storageProvider: IStorageProvider
   ) {}
   async execute({ user_id, avatar_file }: IRequest) {
     const user = await this.usersRepository.findById(user_id);
-    await deleteFile(`./tmp/avatar/${user.avatar}`);
-    if (!user) {
-      throw new AppError("User not exist");
+    if (user.avatar) {
+      await this.storageProvider.delete(user.avatar, "avatar");
     }
+    console.log(avatar_file, user_id);
+    await this.storageProvider.save(avatar_file, "avatar");
 
     user.avatar = avatar_file;
 
-    this.usersRepository.create(user);
+    await this.usersRepository.create(user);
   }
 }
 
