@@ -20,14 +20,20 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 app.use(router);
 
-app.use((err: Error, _: Request, response: Response) => {
+app.use((err: Error, request: Request, response: Response, _: NextFunction) => {
   if (err instanceof AppError) {
-    return response.status(err.statusCode).json({ message: err.message });
+    return response.status(err.statusCode).json({
+      status: "error",
+      message: err.message,
+    });
   }
-  console.log(err);
-  return response
-    .status(500)
-    .json({ status: "error", message: "Internal server error" });
+
+  console.error(err);
+
+  return response.status(500).json({
+    status: "error",
+    message: err.message,
+  });
 });
 
 export { app };
