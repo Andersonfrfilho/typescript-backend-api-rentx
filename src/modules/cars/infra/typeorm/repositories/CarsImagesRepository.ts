@@ -11,7 +11,7 @@ class CarImagesRepository implements ICarsImagesRepository {
     this.repository = getRepository(CarImage);
   }
   async create({ car_id, image_name }: ICreateCarImageDTO): Promise<CarImage> {
-    const cars_image = await this.repository.create({ car_id, image_name });
+    const cars_image = this.repository.create({ car_id, image_name });
 
     await this.repository.save(cars_image);
 

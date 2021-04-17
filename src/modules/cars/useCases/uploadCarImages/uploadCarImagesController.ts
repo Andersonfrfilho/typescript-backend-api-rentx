@@ -1,15 +1,15 @@
 import { Response, Request } from "express";
 import { container } from "tsyringe";
 
-import { UploadCarImagesUseCase } from "@modules/cars/useCases/uploadCarImages/upoloadCarImagesUseCase";
+import { UploadCarImagesUseCase } from "@modules/cars/useCases/uploadCarImages/uploadCarImagesUseCase";
 
 interface IFiles {
   filename: string;
 }
 
-class ListCategoriesController {
+class UploadCarImageController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { id } = request.body;
+    const { id } = request.params;
     const images = request.files as IFiles[];
 
     const uploadCarImageUseCase = container.resolve(UploadCarImagesUseCase);
@@ -24,4 +24,4 @@ class ListCategoriesController {
     return response.json(all);
   }
 }
-export { ListCategoriesController };
+export { UploadCarImageController };
