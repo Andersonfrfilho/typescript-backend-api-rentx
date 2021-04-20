@@ -1,8 +1,6 @@
-import { compare, hash } from "bcrypt";
-import { sign } from "jsonwebtoken";
+import {  hash } from "bcrypt";
 import { inject, injectable } from "tsyringe";
 
-import auth from "@config/auth";
 import { IUsersRepository } from "@modules/accounts/repositories/IUsersRepository";
 import { IUsersTokensRepository } from "@modules/accounts/repositories/IUsersTokensRepository";
 import { IDateProvider } from "@shared/container/providers/DateProvider/IDateProvider";
@@ -23,12 +21,10 @@ class ResetPasswordUserUseCase {
     @inject("UsersRepository")
     private usersRepository: IUsersRepository
   ) {}
-  async execute({ token, password }: IRequest): Promise<IResponse> {
+  async execute({ token, password }: IRequest): Promise<void> {
     const userToken = await this.usersTokensRepository.findByRefreshToken(
       token
     );
-
-    const { expires_in, secret } = auth;
 
     if (!userToken) {
       throw new AppError("Token invalid!");
