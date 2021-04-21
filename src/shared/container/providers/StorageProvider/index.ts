@@ -4,11 +4,6 @@ import { LocalStorageProvider } from "@shared/container/providers/StorageProvide
 import { S3StorageProvider } from "@shared/container/providers/StorageProvider/implementations/S3StorageProvider";
 import { IStorageProvider } from "@shared/container/providers/StorageProvider/IStorageProvider";
 
-container.registerSingleton<IStorageProvider>(
-  "StorageProvider",
-  S3StorageProvider
-);
-
 const diskStorage = {
   local: LocalStorageProvider,
   s3: S3StorageProvider,
