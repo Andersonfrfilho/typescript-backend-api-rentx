@@ -30,6 +30,7 @@
   "scripts": {
     "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files",
     "dev": "ts-node-dev -r tsconfig-paths/register --files --inspect --transpile-only --ignore-watch node_modules --respawn src/shared/infra/http/server.ts",
+    "start:prod": "node ./dist/shared/infra/http/server.js --experimental-modules",
     "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli",
     "seed:admin": "ts-node-dev -r tsconfig-paths/register src/shared/infra/typeorm/seed/admin.ts",
     "test": "jest --runInBand --detectOpenHandles"
