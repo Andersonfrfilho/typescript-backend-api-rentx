@@ -48,5 +48,5 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd ~/app/api-rentx
-            yarn
+            npm install
       
