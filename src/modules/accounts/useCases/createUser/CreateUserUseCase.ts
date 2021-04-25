@@ -4,12 +4,15 @@ import { inject, injectable } from "tsyringe";
 import { AppError } from "@shared/errors/AppError";
 import { ICreateUserDTO } from "@modules/accounts/dtos/ICreateUserDTO";
 import { IUsersRepository } from "@modules/accounts/repositories/IUsersRepository";
+import { INotificationsRepository } from "@modules/notifications/repositories/INotificationsRepository";
 
 @injectable()
 class CreateUserUseCase {
   constructor(
     @inject("UsersRepository")
-    private usersRepository: IUsersRepository
+    private usersRepository: IUsersRepository,
+    @inject("NotificationsRepository")
+    private notificationsRepository: INotificationsRepository
   ) {}
   async execute({
     name,
@@ -22,6 +25,7 @@ class CreateUserUseCase {
       throw new AppError("User already exist");
     }
     const passwordHash = await hash(password, 8);
+    await this.notificationsRepository.create({content:"uhlll",receipt_id:"38aad63e-7f5e-48c7-a191-19a9033104d4"})
     await this.usersRepository.create({
       name,
       email,

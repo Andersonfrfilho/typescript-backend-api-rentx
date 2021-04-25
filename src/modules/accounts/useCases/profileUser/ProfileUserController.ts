@@ -6,7 +6,6 @@ import { ProfileUserUseCase } from "@modules/accounts/useCases/profileUser/Profi
 class ProfileUserController {
   async handle(request: Request, response: Response): Promise<Response> {
     const { id } = request.user;
-    console.log(id)
     const profileUserUseCase = container.resolve(ProfileUserUseCase);
 
     const user = await profileUserUseCase.execute(id)

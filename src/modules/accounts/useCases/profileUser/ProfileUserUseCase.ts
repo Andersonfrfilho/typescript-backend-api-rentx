@@ -12,7 +12,6 @@ class ProfileUserUseCase {
   ) { }
   async execute(id: string): Promise<IUserResponseDTO> {
     const user = await this.usersRepository.findById(id);
-    console.log(user)
     return UserMap.toDTO(user)
   }
 }
