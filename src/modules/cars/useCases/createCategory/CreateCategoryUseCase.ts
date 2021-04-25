@@ -2,6 +2,7 @@ import { inject, injectable } from "tsyringe";
 
 import { AppError } from "@shared/errors/AppError";
 import { ICategoriesRepository } from "@modules/cars/repositories/ICategoriesRepository";
+import { ICacheProvider } from "@shared/container/providers/CacheProvider/ICacheProvider";
 
 interface IRequest {
   name: string;
@@ -11,7 +12,9 @@ interface IRequest {
 class CreateCategoryUseCase {
   constructor(
     @inject("CategoriesRepository")
-    private categoriesRepository: ICategoriesRepository
+    private categoriesRepository: ICategoriesRepository,
+    @inject("CacheProvider")
+    private cacheProvider: ICacheProvider
   ) {}
 
   async execute({ name, description }: IRequest): Promise<void> {
@@ -22,7 +25,7 @@ class CreateCategoryUseCase {
     if (categoryAlreadyExists) {
       throw new AppError("Category already exists!");
     }
-
+    await this.cacheProvider.invalidatePrefix(`categories`);
     this.categoriesRepository.create({ name, description });
   }
 }
