@@ -7,7 +7,7 @@ import { UpdateUserAvatarController } from "@modules/accounts/useCases/updateUse
 import { ProfileUserController } from "@modules/accounts/useCases/profileUser/ProfileUserController";
 
 import { ensureAuthenticated } from "@shared/infra/http/middlewares/ensureAuthenticated";
-
+import { celebrate, Segments, Joi } from 'celebrate';
 const usersRoutes = Router();
 const uploadAvatar = multer(uploadConfig);
 const createUserController = new CreateUserController();
@@ -15,7 +15,13 @@ const updateUserAvatarController = new UpdateUserAvatarController();
 const profileUserController = new ProfileUserController();
 
 
-usersRoutes.post("/", createUserController.handle);
+usersRoutes.post("/",
+celebrate({
+  [Segments.BODY]: {
+    provider_id: Joi.string().uuid().required(),
+    date: Joi.date(),
+  },
+}), createUserController.handle);
 usersRoutes.patch(
   "/avatar",
   ensureAuthenticated,

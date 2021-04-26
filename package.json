@@ -8,6 +8,7 @@
     "@sentry/tracing": "^6.3.1",
     "aws-sdk": "^2.888.0",
     "bcrypt": "^5.0.1",
+    "celebrate": "^14.0.0",
     "class-transformer": "^0.4.0",
     "cors": "^2.8.5",
     "cross-env": "^7.0.3",

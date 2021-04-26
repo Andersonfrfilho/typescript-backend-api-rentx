@@ -9,6 +9,7 @@ import { UploadCarImageController } from "@modules/cars/useCases/uploadCarImages
 import { ensureAdmin } from "@shared/infra/http/middlewares/ensureAdmin";
 import { ensureAuthenticated } from "@shared/infra/http/middlewares/ensureAuthenticated";
 
+
 const carsRoutes = Router();
 const upload = multer(uploadConfig);
 const createCarController = new CreateCarController();

@@ -8,6 +8,7 @@ import * as Tracing from "@sentry/tracing";
 import cors from "cors";
 import { AppError } from "@shared/errors/AppError";
 import createConnection from "@shared/infra/typeorm";
+import { errors } from 'celebrate';
 
 import swaggerFile from "../../../swagger.json";
 import { router } from "./routes";
@@ -42,6 +43,7 @@ app.use("/cars", express.static(`${upload.tmpFolder}/cars`));
 app.use(cors());
 app.use(router);
 app.use(Sentry.Handlers.errorHandler());
+app.use(errors());
 app.use((err: Error, request: Request, response: Response, _: NextFunction) => {
   if (err instanceof AppError) {
     return response.status(err.statusCode).json({
