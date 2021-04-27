@@ -6,10 +6,12 @@ export class CreateSpecification1617477675033 implements MigrationInterface {
       new Table({
         name: "specifications",
         columns: [
-          {
-            name: "id",
-            type: "uuid",
+          { 
+            name: "id", 
+            type: "uuid", 
             isPrimary: true,
+            generationStrategy: 'uuid',
+            default: 'uuid_generate_v4()' 
           },
           {
             name: "name",

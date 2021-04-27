@@ -5,7 +5,7 @@ import { v4 as uuidV4 } from "uuid";
 @Entity("users")
 class User {
   @PrimaryColumn()
-  id: string;
+  id?: string;
 
   @Column()
   name: string;
@@ -23,13 +23,13 @@ class User {
   isAdmin: boolean;
 
   @Column()
-  avatar: string;
+  avatar?: string;
 
   @CreateDateColumn()
-  created_at: Date;
+  created_at?: Date;
 
   @Expose({ name: "avatar_url" })
-  avatar_url(): string {
+  avatar_url?(): string {
 
     switch (process.env.DISK_STORAGE_PROVIDER) {
       case "local":

@@ -6,7 +6,13 @@ export class CreateCarImages1618066630840 implements MigrationInterface {
       new Table({
         name: "cars_images",
         columns: [
-          { name: "id", type: "uuid", isPrimary: true },
+          { 
+            name: "id", 
+            type: "uuid", 
+            isPrimary: true,
+            generationStrategy: 'uuid',
+            default: 'uuid_generate_v4()' 
+          },
           { name: "car_id", type: "uuid" },
           { name: "image_name", type: "varchar" },
           { name: "created_at", type: "timestamp", default: "now()" },

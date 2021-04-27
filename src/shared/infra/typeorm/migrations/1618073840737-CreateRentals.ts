@@ -6,7 +6,13 @@ export class CreateRentals1618073840737 implements MigrationInterface {
       new Table({
         name: "rentals",
         columns: [
-          { name: "id", type: "uuid", isPrimary: true },
+          { 
+            name: "id", 
+            type: "uuid", 
+            isPrimary: true,
+            generationStrategy: 'uuid',
+            default: 'uuid_generate_v4()' 
+          },
           { name: "car_id", type: "uuid" },
           { name: "user_id", type: "uuid" },
           { name: "start_date", type: "timestamp", default: "now()" },

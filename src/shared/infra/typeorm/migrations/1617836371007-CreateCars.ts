@@ -6,7 +6,13 @@ export class CreateCars1617836371007 implements MigrationInterface {
       new Table({
         name: "cars",
         columns: [
-          { name: "id", type: "uuid", isPrimary: true },
+          { 
+            name: "id", 
+            type: "uuid", 
+            isPrimary: true,
+            generationStrategy: 'uuid',
+            default: 'uuid_generate_v4()' 
+          },
           { name: "name", type: "varchar" },
           { name: "description", type: "varchar" },
           { name: "daily_rate", type: "numeric" },
