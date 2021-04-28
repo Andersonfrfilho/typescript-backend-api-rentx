@@ -1,10 +1,11 @@
-import {ObjectID, Entity, Column, CreateDateColumn, UpdateDateColumn, ObjectIdColumn} from "typeorm"
+import {ObjectID, Entity, Column,Index, CreateDateColumn, UpdateDateColumn, ObjectIdColumn} from "typeorm"
 
 @Entity("notifications")
 class Notification{
   @ObjectIdColumn()
   id: ObjectID;
-  
+  //create index
+  //@Index({})
   @Column()
   content: string;
   

@@ -1,15 +1,14 @@
-import express from "express";
-import * as socketio from "socket.io";
+
 import * as path from "path";
 import cors from "cors";
-const app = express();
-app.use(cors());
+import { app } from "@shared/infra/http/app"
+import { Server } from "socket.io"
 app.set("port", process.env.PORT || 3000);
 
 let http = require("http").Server(app);
 // set up socket.io and bind it to our
 // http server.
-let io = require("socket.io")(http);
+const io = new Server(http);
 
 app.get("/", (req: any, res: any) => {
   res.sendFile(path.resolve("./client/index.html"));
