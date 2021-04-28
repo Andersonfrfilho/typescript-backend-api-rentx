@@ -1,25 +1,18 @@
 
-import * as path from "path";
-import cors from "cors";
 import { app } from "@shared/infra/http/app"
-import { Server } from "socket.io"
-app.set("port", process.env.PORT || 3000);
+import { Server as ServerSocket } from "socket.io"
+import { Server as ServerHttp } from "http"
 
-let http = require("http").Server(app);
-// set up socket.io and bind it to our
-// http server.
-const io = new Server(http);
+app.set("port", process.env.PORT || 3333);
 
-app.get("/", (req: any, res: any) => {
-  res.sendFile(path.resolve("./client/index.html"));
-});
+let http = new ServerHttp(app);
 
-// whenever a user connects on port 3000 via
-// a websocket, log that a user has connected
+const io = new ServerSocket(http);
+
 io.on("connection", function(socket: any) {
   console.log("a user connected");
 });
 
-const server = http.listen(3000, function() {
-  console.log("listening on *:3000");
+http.listen(process.env.PORT || 3333, function() {
+  console.log(`listening on *:${process.env.PORT || 3333}`);
 });
