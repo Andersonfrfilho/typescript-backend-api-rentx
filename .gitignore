@@ -6,3 +6,4 @@ covarage/
 dist/
 ormconfig.json
 *.pem
+.history/

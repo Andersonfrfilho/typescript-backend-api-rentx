@@ -15,11 +15,25 @@ import { router } from "./routes";
 import rateLimiter from "@shared/infra/http/middlewares/rateLimiter"
 import "@shared/container";
 import upload from "@config/upload";
+import { Kafka } from "kafkajs";
 
 createConnection();
 const app = express();
 
 app.use(rateLimiter);
+const kafka = new Kafka({
+  clientId: 'api',
+  brokers: ['host.docker.internal:9094']
+});
+
+const producer = kafka.producer()
+
+app.use((req, res, next) => {
+  req.producer = producer;
+
+  return next();
+})
+
 
 Sentry.init({
   dsn: process.env.SENTRY_DSN,

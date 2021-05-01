@@ -1,3 +1,5 @@
+import { Kafka } from "kafkajs";
+
 declare namespace Express {
   // eslint-disable-next-line @typescript-eslint/naming-convention
   export interface Request {
@@ -7,6 +9,7 @@ declare namespace Express {
     user: {
       id: string;
     };
+    producer:Kafka.producer;
   }
 }
 // declare global {
