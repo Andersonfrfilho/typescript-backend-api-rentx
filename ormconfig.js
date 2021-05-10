@@ -2,11 +2,11 @@ module.exports = [
   {
     "name": "deafult",
     "type": "postgres",
-    "port": process.env.DATABASE_PG_PORT || 5432,
-    "host": process.env.DATABASE_PG_HOST || "localhost",
-    "username": process.env.DATABASE_PG_USER || "docker",
-    "password": process.env.DATABASE_PG_PASSWORD || "password",
-    "database": process.env.DATABASE_PG_DATABASE || "database",
+    "port": process.env.POSTGRES_PORT || 5432,
+    "host": process.env.POSTGRES_HOST || "localhost",
+    "username": process.env.POSTGRES_USER || "docker",
+    "password": process.env.POSTGRES_PASSWORD || "password",
+    "database": process.env.POSTGRES_DATABASE || "database",
     "migrations": [
       "./src/shared/infra/typeorm/migrations/*.ts"
     ],
@@ -20,11 +20,11 @@ module.exports = [
   {
     "name": "seed",
     "type": "postgres",
-    "port": process.env.DATABASE_PG_PORT || 5432,
-    "host": process.env.DATABASE_PG_HOST || "localhost",
-    "username": process.env.DATABASE_PG_USER || "docker",
-    "password": process.env.DATABASE_PG_PASSWORD || "password",
-    "database": process.env.DATABASE_PG_DATABASE || "database",
+    "port": process.env.POSTGRES_PORT || 5432,
+    "host": process.env.POSTGRES_HOST || "localhost",
+    "username": process.env.POSTGRES_USER || "docker",
+    "password": process.env.POSTGRES_PASSWORD || "password",
+    "database": process.env.POSTGRES_DATABASE || "database",
     "migrations": [
       "./src/shared/infra/typeorm/seeds/*.ts"
     ],
@@ -38,9 +38,9 @@ module.exports = [
   {
     "name": "mongo",
     "type": "mongodb",
-    "host": process.env.DATABASE_MONGO_HOST || "localhost",
-    "port": process.env.DATABASE_MONGO_PORT || 27017,
-    "database": process.env.DATABASE_MONGO_DATABASE || "database",
+    "host": process.env.MONGO_HOST || "localhost",
+    "port": process.env.MONGO_PORT || 27017,
+    "database": process.env.MONGO_DATABASE || "database",
     "useUnifiedTopology": true,
     "entities": [
       "./src/modules/**/infra/typeorm/schemas/*.ts"

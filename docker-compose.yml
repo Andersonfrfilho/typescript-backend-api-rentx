@@ -7,10 +7,13 @@ services:
     restart: always
     ports:
       - 5432:5432
-    environment:
-      - POSTGRES_USER=docker
-      - POSTGRES_PASSWORD=ignite
-      - POSTGRES_DB=rentx
+    env_file:
+      - .env
+    # environment:
+    #   - POSTGRES_USER=docker
+    #   - POSTGRES_PASSWORD=ignite
+    #   - POSTGRES_DB=rentx
+    
     volumes:
       - pgdata:/data/postgres
   
